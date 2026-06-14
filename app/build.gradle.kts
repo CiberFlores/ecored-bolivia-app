@@ -42,7 +42,7 @@ android {
 }
 
 dependencies {
-    // 1. Librerías base estables (Reemplazamos las "libs" del futuro)
+    // 1. Librerías base estables
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.2")
     implementation("androidx.activity:activity-compose:1.9.0")
@@ -53,11 +53,18 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
 
     // 3. Navegación y Firebase
     implementation("androidx.navigation:navigation-compose:2.7.7")
     implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+    
+    // 4. Imágenes y Mapas
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("org.osmdroid:osmdroid-android:6.1.18")
+
+    // 5. Cloudinary para subida de imágenes
+    implementation("com.cloudinary:cloudinary-android:2.5.0")
 }

@@ -7,6 +7,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -23,7 +25,7 @@ data class Product(val id: String, val name: String, val price: String, val imag
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MarketplaceScreen() {
+fun MarketplaceScreen(onNavigateToHome: () -> Unit, onNavigateToPerfil: () -> Unit) {
     // Lista simulada de la base de datos con imágenes reales de internet
     val products = listOf(
         Product("1", "Termo Ecológico", "150 Puntos", "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=500&q=60"),
@@ -38,9 +40,31 @@ fun MarketplaceScreen() {
                 title = { Text("EcoTienda", fontWeight = FontWeight.Bold, color = Color(0xFF1B5E20)) },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.White)
             )
+        },
+        bottomBar = {
+            NavigationBar(containerColor = Color.White, tonalElevation = 8.dp) {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Home, contentDescription = "Inicio") },
+                    label = { Text("Inicio") },
+                    selected = false,
+                    onClick = { onNavigateToHome() }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.ShoppingCart, contentDescription = "Tienda") },
+                    label = { Text("Tienda") },
+                    selected = true,
+                    onClick = { /* Ya estamos aquí */ },
+                    colors = NavigationBarItemDefaults.colors(selectedIconColor = Color(0xFF2E7D32), indicatorColor = Color(0xFFE8F5E9))
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Perfil") },
+                    label = { Text("Perfil") },
+                    selected = false,
+                    onClick = { onNavigateToPerfil() }
+                )
+            }
         }
     ) { padding ->
-        // Aquí está el LazyVerticalGrid que pedía la tarea
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize().padding(padding).background(Color(0xFFF1F3F4)).padding(8.dp),
@@ -63,7 +87,6 @@ fun ProductCard(product: Product) {
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            // AsyncImage de Coil descarga la imagen sin trabar la app
             AsyncImage(
                 model = product.imageUrl,
                 contentDescription = product.name,
